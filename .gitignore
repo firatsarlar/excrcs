@@ -1,0 +1,21 @@
+# --- Compiled output / C++ build artifacts ---
+asset_scraper
+a.out
+*.o
+*.out
+*.exe
+*.dSYM/
+
+# --- macOS ---
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# --- Editors / IDE ---
+.vscode/
+.idea/
+*.swp
+
+# --- Claude Code (machine-local settings) ---
+.claude/settings.local.json
