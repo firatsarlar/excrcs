@@ -1,0 +1,16 @@
+{
+  // clangd is the single C/C++ language server here. Turn off the Microsoft
+  // C/C++ IntelliSense engine so the two stop producing duplicate diagnostics
+  // (that conflict is what red-underlines the #include lines — clangd itself
+  // reports zero errors on this file).
+  "C_Cpp.intelliSenseEngine": "disabled",
+
+  "clangd.arguments": [
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=never"
+  ],
+
+  // Apple Silicon-friendly debug adapter shipped with Xcode.
+  "lldb-dap.executable-path": "/Applications/Xcode.app/Contents/Developer/usr/bin/lldb-dap"
+}

@@ -13,7 +13,12 @@ a.out
 .Trashes
 
 # --- Editors / IDE ---
-.vscode/
+# Keep shared VS Code project config; ignore the rest under .vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 .idea/
 *.swp
 

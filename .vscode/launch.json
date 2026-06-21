@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "lldb-dap",
+      "request": "launch",
+      "name": "Debug asset_scraper",
+      "program": "${workspaceFolder}/d/asset_scraper",
+      "args": [],
+      // Run inside d/ so the scraper walks the image fixtures and prints output.
+      "cwd": "${workspaceFolder}/d",
+      "stopOnEntry": false,
+      "preLaunchTask": "build asset_scraper (debug)"
+    }
+  ]
+}
