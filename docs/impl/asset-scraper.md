@@ -35,11 +35,13 @@ filesystem boundary; no per-entry error handling.
 
 ## Considered, not done
 
-- **Make it a class / global `path`** — no. It's a ~65-line run-once pipeline; a
-  class is ceremony and a global is hidden state. If it grows, the right next step
-  is a pure `std::vector<std::string> scan_images(root)` with `main` kept thin —
-  that's the step *before* a class. A class earns its keep only once there's CLI
-  config, library reuse, or multi-scan state.
+- **Make it a class / global `path`** — not needed for the code: it's a ~65-line
+  run-once pipeline; a class is ceremony and a global is hidden state. The pure
+  `std::vector<std::string> scan_images(root)` free function with a thin `main` is
+  the step *before* a class. A class earns its keep only once there's CLI config,
+  library reuse, or multi-scan state. **Done anyway as a C++ learning exercise** —
+  see `c1-class-refactor.md` (`AssetScraper`: scan-once, shared `results_`,
+  iterators encapsulated).
 - **Allocation-free extension match** — `to_lower(...).string()` allocates a string
   per file, but `.extension().string()` allocates anyway and the loop is I/O-bound,
   so an in-place case-insensitive compare adds complexity for no measurable gain.
