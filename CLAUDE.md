@@ -16,7 +16,9 @@ Published: https://github.com/firatsarlar/excrcs
 
 - `d/` — the C++ playground.
   - `c1.cpp` — `asset_scraper`: recursively lists image files under a directory,
-    sorted, for portfolio ingestion.
+    sorted, for portfolio ingestion. (Canonical build, C++17.)
+  - `c1_v20.cpp` — the same program in C++20 (ranges + `std::format`), kept for
+    comparison; see `docs/impl/cpp-modernization.md`.
   - `build.sh` — `g++ -std=c++17 c1.cpp -o asset_scraper && ./asset_scraper`
   - `test.sh` — scraper test suite.
   - `.clangd` — clangd config (C++17 flags; designator inlay hints off).
@@ -44,6 +46,7 @@ Published: https://github.com/firatsarlar/excrcs
 ## Background docs
 
 - `docs/impl/asset-scraper.md` — scraper design and the key decisions (start here).
+- `docs/impl/cpp-modernization.md` — C++17 → 20/23/26 modernization (and `c1_v20.cpp`).
 - `docs/impl/asset-scraper-tests.md` — test suite.
 - `docs/impl/vscode-debug-setup.md` — clangd-only setup + how debugging is wired.
 - `docs/impl/c1-const-vs-constexpr.md` — constexpr/const choices in c1.cpp.
