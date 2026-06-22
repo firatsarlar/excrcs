@@ -1,5 +1,6 @@
 # --- Compiled output / C++ build artifacts ---
 asset_scraper
+images.txt
 a.out
 *.o
 *.out

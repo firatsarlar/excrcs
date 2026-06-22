@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 #include <string>
 #include <vector>
@@ -30,6 +31,8 @@ int main() {
     constexpr auto kTitle   = "RAW FILE LIST GENERATED FOR LLM PROCESSING:\n";
     constexpr auto kErrorNotDirectory = "Error: Provided path is not a valid directory.\n";
     constexpr auto kFilesystemErrorPrefix = "Filesystem Error: ";
+    constexpr auto kOutputFile = "images.txt";
+    constexpr auto kErrorWriteFailed = "Error: could not open output file for writing: ";
     std::cout << kDivider << kTitle << kDivider;
 
     static constexpr std::array<std::string_view, 6> kImageExts = {
@@ -59,8 +62,21 @@ int main() {
 
     // Deterministic, reproducible (conflict-free) ordering.
     std::sort(results.begin(), results.end());
-    for (const auto& r : results) std::cout << "- " << r << "\n";
+
+    // One pass: human-formatted to stdout, clean path-per-line to the file
+    // (for ingestion as an array elsewhere). stdout still prints if the file fails.
+    std::ofstream out(kOutputFile);
+    for (const auto& r : results) {
+        std::cout << "- " << r << "\n";
+        if (out) out << r << '\n';
+    }
 
     std::cout << kDivider;
+    if (!out) {
+        std::cerr << kErrorWriteFailed << kOutputFile << "\n";
+        return 1;
+    }
+
+    std::cout << results.size() << " path(s) written to " << kOutputFile << "\n";
     return 0;
 }
