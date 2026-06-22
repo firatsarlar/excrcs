@@ -6,10 +6,24 @@
       "detail": "Compile c1.cpp with debug symbols (-g)",
       "type": "shell",
       "command": "g++",
-      "args": ["-std=c++17", "-g", "-O0", "c1.cpp", "-o", "asset_scraper"],
-      "options": { "cwd": "${workspaceFolder}/d" },
-      "group": { "kind": "build", "isDefault": true },
-      "problemMatcher": ["$gcc"]
+      "args": [
+        "-std=c++20",
+        "-g",
+        "-O0",
+        "c1.cpp",
+        "-o",
+        "asset_scraper"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}/d"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [
+        "$gcc"
+      ]
     }
   ]
 }
