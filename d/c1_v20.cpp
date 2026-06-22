@@ -27,17 +27,25 @@ static bool is_image(const fs::path& p) {
     return std::ranges::find(kImageExts, ext) != kImageExts.end();
 }
 
+// Path relative to base with '/' separators (stable cross-platform output);
+// keeps same-named files in different folders distinct.
+static std::string relative_path(const fs::path& p, const fs::path& base) {
+    return p.lexically_relative(base).generic_string();
+}
+
 int main() {
     const fs::path root = ".";
     constexpr auto kDivider = "-----------------------------------------\n";
+    constexpr auto kTitle   = "RAW FILE LIST GENERATED FOR LLM PROCESSING:\n";
+    constexpr auto kErrorNotDirectory     = "Error: Provided path is not a valid directory.\n";
+    constexpr auto kFilesystemErrorPrefix = "Filesystem Error: ";
 
-    std::cout << std::format("{0}RAW FILE LIST GENERATED FOR LLM PROCESSING:\n{0}",
-                             kDivider);
+    std::cout << std::format("{0}{1}{0}", kDivider, kTitle);
 
     std::vector<std::string> results;
     try {
         if (!fs::is_directory(root)) {
-            std::cerr << "Error: Provided path is not a valid directory.\n";
+            std::cerr << kErrorNotDirectory;
             return 1;
         }
 
@@ -49,16 +57,18 @@ int main() {
             | std::views::filter([](const fs::directory_entry& e) { return e.is_regular_file(); })
             | std::views::filter([](const fs::directory_entry& e) { return is_image(e.path()); })
             | std::views::transform([&](const fs::directory_entry& e) {
-                  return e.path().lexically_relative(root).generic_string();
+                  return relative_path(e.path(), root);
               });
 
         for (auto&& rel : images) results.push_back(std::move(rel));
     } catch (const fs::filesystem_error& e) {
-        std::cerr << std::format("Filesystem Error: {}\n", e.what());
+        std::cerr << std::format("{}{}\n", kFilesystemErrorPrefix, e.what());
     }
 
     std::ranges::sort(results);
-    for (const auto& r : results) std::cout << std::format("- {}\n", r);
+    std::ranges::for_each(results, [](const auto& r) {
+        std::cout << std::format("- {}\n", r);
+    });
 
     std::cout << kDivider;
     return 0;
