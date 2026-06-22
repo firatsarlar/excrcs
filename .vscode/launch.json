@@ -5,7 +5,7 @@
       "type": "lldb-dap",
       "request": "launch",
       "name": "Debug asset_scraper",
-      "program": "${workspaceFolder}/d/asset_scraper",
+      "program": "${workspaceFolder}/d/dist/asset_scraper",
       "args": [],
       // Run inside d/ so the scraper walks the image fixtures and prints output.
       "cwd": "${workspaceFolder}/d",

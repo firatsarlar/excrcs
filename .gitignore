@@ -1,6 +1,7 @@
-# --- Compiled output / C++ build artifacts ---
-asset_scraper
-images.txt
+# --- Build output (binaries + generated images.txt) ---
+dist/
+
+# --- Stray compiles (when not building into dist/) ---
 a.out
 *.o
 *.out

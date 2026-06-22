@@ -19,17 +19,20 @@ Published: https://github.com/firatsarlar/excrcs
     sorted, for portfolio ingestion. (Canonical build, C++17.)
   - `c1_v20.cpp` — the same program in C++20 (ranges + `std::format`), kept for
     comparison; see `docs/impl/cpp-modernization.md`.
-  - `build.sh` — `g++ -std=c++17 c1.cpp -o asset_scraper && ./asset_scraper`
+  - `c2.cpp` — `Images`: a fluent/chainable C++20 rewrite
+    (`Images::from(".").sort().print().save(...)`); see `docs/impl/c2-fluent-scraper.md`.
+  - `build.sh` — `g++ -std=c++17 c1.cpp -o dist/asset_scraper && ./dist/asset_scraper`
   - `test.sh` — scraper test suite.
   - `.clangd` — clangd config (C++17 flags; designator inlay hints off).
   - `images/` — test fixtures (nested dirs, albums).
+  - `dist/` — build output (binaries + generated `images.txt`); gitignored.
 - `docs/impl/` — implementation notes and decisions. **Read these for background.**
 - `.vscode/` — clangd-only IntelliSense + lldb-dap debugging.
 
 ## Build / run / debug
 
 - Build + run: `cd d && ./build.sh`
-  (or `g++ -std=c++17 -Wall -Wextra c1.cpp -o asset_scraper`).
+  (or `g++ -std=c++17 -Wall -Wextra c1.cpp -o dist/asset_scraper`).
 - Tests: `cd d && ./test.sh`.
 - Debug: VS Code F5 (lldb-dap; builds with `-g` first, runs from `d/`).
 
@@ -39,7 +42,8 @@ Published: https://github.com/firatsarlar/excrcs
 - Prefer minimal idiomatic modern C++: `constexpr` for fixed data,
   `string_view`/`array` over heap containers where it fits, helpers only when
   they earn their name.
-- Compiled binaries are gitignored (`asset_scraper`) — never commit build output.
+- All build output goes to `dist/` (gitignored) — binaries and the generated
+  `images.txt`; never commit it.
 - clangd is the single language server; the Microsoft C/C++ IntelliSense engine
   is disabled in `.vscode/settings.json`.
 

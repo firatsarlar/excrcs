@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <string_view>
+#include <system_error>
 #include <utility>
 #include <vector>
 
@@ -51,6 +52,9 @@ public:
   // Clean path-per-line file for ingestion as an array elsewhere.
   // Returns false if the file cannot be opened.
   bool write(const fs::path &out) const {
+    std::error_code ec;
+    if (out.has_parent_path())
+      fs::create_directories(out.parent_path(), ec);
     std::ofstream os(out);
     if (!os)
       return false;
@@ -79,16 +83,15 @@ private:
   fs::path root_;
   std::vector<std::string> results_;
 };
-
+constexpr auto kDivider = "-----------------------------------------\n";
+constexpr auto kTitle = "RAW FILE LIST GENERATED FOR LLM PROCESSING:\n";
+constexpr auto kErrorNotDirectory =
+    "Error: Provided path is not a valid directory.\n";
+constexpr auto kFilesystemErrorPrefix = "Filesystem Error: ";
+constexpr auto kOutputFile = "dist/images.txt";
+constexpr auto kErrorWriteFailed =
+    "Error: could not open output file for writing: ";
 int main() {
-  constexpr auto kDivider = "-----------------------------------------\n";
-  constexpr auto kTitle = "RAW FILE LIST GENERATED FOR LLM PROCESSING:\n";
-  constexpr auto kErrorNotDirectory =
-      "Error: Provided path is not a valid directory.\n";
-  constexpr auto kFilesystemErrorPrefix = "Filesystem Error: ";
-  constexpr auto kOutputFile = "images.txt";
-  constexpr auto kErrorWriteFailed =
-      "Error: could not open output file for writing: ";
 
   const fs::path root = "."; // current working directory
 

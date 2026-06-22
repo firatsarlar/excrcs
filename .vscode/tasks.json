@@ -3,16 +3,12 @@
   "tasks": [
     {
       "label": "build asset_scraper (debug)",
-      "detail": "Compile c1.cpp with debug symbols (-g)",
+      "detail": "Compile c1.cpp with debug symbols (-g) into dist/",
       "type": "shell",
-      "command": "g++",
+      "command": "bash",
       "args": [
-        "-std=c++20",
-        "-g",
-        "-O0",
-        "c1.cpp",
-        "-o",
-        "asset_scraper"
+        "-c",
+        "mkdir -p dist && g++ -std=c++20 -g -O0 c1.cpp -o dist/asset_scraper"
       ],
       "options": {
         "cwd": "${workspaceFolder}/d"

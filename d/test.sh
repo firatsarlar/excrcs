@@ -6,7 +6,7 @@
 set -uo pipefail
 
 HERE=$(cd "$(dirname "$0")" && pwd)
-BIN="$HERE/asset_scraper"
+BIN="$HERE/dist/asset_scraper"
 IMAGES="$HERE/images"
 PASS=0
 FAIL=0
@@ -36,7 +36,7 @@ assert_eq() { # <actual> <expected> <description>
 }
 
 echo "== build =="
-g++ -std=c++17 "$HERE/c1.cpp" -o "$BIN" || { echo "BUILD FAILED"; exit 1; }
+mkdir -p "$HERE/dist" && g++ -std=c++17 "$HERE/c1.cpp" -o "$BIN" || { echo "BUILD FAILED"; exit 1; }
 echo "  ok   - compiles with -std=c++17"
 
 echo "== run scraper against ./images =="

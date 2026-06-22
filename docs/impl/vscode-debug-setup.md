@@ -15,7 +15,7 @@ False red squiggles under every C++ `#include`. Root cause — two language serv
 ## What changed
 
 - `.vscode/settings.json` — `C_Cpp.intelliSenseEngine: disabled`; clangd args (`--background-index`, `--clang-tidy`); lldb-dap executable path.
-- `.vscode/tasks.json` — default build task `g++ -std=c++17 -g -O0 c1.cpp -o asset_scraper` (cwd `d/`).
+- `.vscode/tasks.json` — default build task `mkdir -p dist && g++ -std=c++20 -g -O0 c1.cpp -o dist/asset_scraper` (cwd `d/`).
 - `.vscode/launch.json` — `lldb-dap` launch, cwd `d/`, `preLaunchTask` = debug build.
 - `.gitignore` — selective `.vscode/*` pattern keeping shared config tracked, user-local ignored.
 
